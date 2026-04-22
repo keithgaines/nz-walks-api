@@ -1,97 +1,113 @@
-# New Zealand Walking Trails API Documentation
+# New Zealand Walks API — ASP.NET Core REST API
 
-This document provides an overview of the API's functionality, endpoints, usage instructions, and important considerations. This API serves as a backend resource for retrieving and managing information about various walking trails across New Zealand.
+RESTful API built with ASP.NET Core for managing walking trail data across New Zealand, with authentication, role-based authorization, and full CRUD support for regions and walks.
 
-## Table of Contents
+---
 
-- [Introduction](#introduction)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Endpoints](#endpoints)
-  - [Regions](#regions)
-  - [Walks](#walks)
-- [Authentication](#authentication)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
+## Overview
 
-## Introduction
+This API provides structured access to walking trail data across New Zealand, supporting both read and administrative operations.
 
-The New Zealand Walking Trails API is designed to provide users with information about various walking trails located in New Zealand. It allows users to retrieve details about different regions and the walks available within those regions.
+It demonstrates:
+- RESTful API design using ASP.NET Core
+- Clean separation of concerns (controllers, services, data layer)
+- JWT-based authentication and role-based access control
+- Query support for filtering, sorting, and pagination
+- Database-driven architecture using Entity Framework Core
 
-## Technologies Used
+---
 
-- Programming Languages: C#
-- Web Framework: ASP.NET Core
-- Database: SQL
-- ORM: Entity Framework Core
-- Authentication: JWT (JSON Web Tokens)
+## Core Features
 
-## Getting Started
+- Region management (CRUD operations)
+- Walk management with filtering and pagination
+- Role-based access control (Reader / Writer)
+- JWT authentication for protected endpoints
+- Structured relational data model using SQL Server
+- Scalable REST API architecture
 
-### Prerequisites
+---
 
-- [.NET Core SDK](https://dotnet.microsoft.com/download) (version 7.0) or 
+## Technical Stack
 
-### Installation
+- ASP.NET Core Web API  
+- C#  
+- Entity Framework Core  
+- SQL Server  
+- JWT Authentication  
 
-1. Clone this repository to your local machine.
-2. Navigate to the project directory using the terminal.
-3. Run the following command to build and run the API:
+---
 
-   ```shell
-   dotnet run
-   ```
+## Architecture Overview
 
-4. The API will be accessible at `http://localhost:portNumber`.
+The system is structured using a layered API architecture:
+
+- **Controllers** — Handle HTTP requests and route mapping  
+- **Services Layer** — Encapsulates business logic  
+- **Data Layer** — Entity Framework Core DbContext and persistence  
+- **Models** — Domain entities and DTOs  
+
+This structure supports separation of concerns and long-term extensibility.
+
+---
+
+## Authentication & Authorization
+
+This API uses JWT (JSON Web Tokens) for authentication.
+
+Two primary roles are enforced:
+- **Reader** — Read-only access to resources  
+- **Writer** — Full access to create, update, and delete resources  
+
+Authenticated requests must include:
+```
+Authorization: Bearer <token>
+```
+
+---
 
 ## Endpoints
 
 ### Regions
 
-- `GET /api/regions`: Get a list of all regions.
-- `GET /api/regions/{id}`: Get information about a specific region.
-- `POST /api/regions`: Create a new region (authentication required).
-- `PUT /api/regions/{id}`: Update information about a region (authentication required).
-- `DELETE /api/regions/{id}`: Delete a region (authentication required).
+- `GET /api/regions` — Retrieve all regions  
+- `GET /api/regions/{id}` — Retrieve a specific region  
+- `POST /api/regions` — Create region (Writer only)  
+- `PUT /api/regions/{id}` — Update region (Writer only)  
+- `DELETE /api/regions/{id}` — Delete region (Writer only)  
+
+---
 
 ### Walks
 
-- `POST /api/walks`: Create a new walk (authentication required).
-- `GET /api/walks`: Get a list of walks with optional filtering, sorting, and pagination.
-- `GET /api/walks/{id}`: Get information about a specific walk.
-- `PUT /api/walks/{id}`: Update information about a walk (authentication required).
-- `DELETE /api/walks/{id}`: Delete a walk (authentication required).
+- `GET /api/walks` — Retrieve walks (supports filtering, sorting, pagination)  
+- `GET /api/walks/{id}` — Retrieve a specific walk  
+- `POST /api/walks` — Create walk (Writer only)  
+- `PUT /api/walks/{id}` — Update walk (Writer only)  
+- `DELETE /api/walks/{id}` — Delete walk (Writer only)  
 
-## Authentication
+---
 
-The API uses JWT (JSON Web Tokens) for authentication. Certain endpoints require specific roles for access. Roles are defined as "Reader" and "Writer."
+## Design Decisions
 
-To authenticate, include the JWT token in the authorization header of your requests:
+- Used JWT authentication to decouple identity from API logic  
+- Implemented role-based authorization for secure write operations  
+- Designed endpoints around resource-based REST principles  
+- Added filtering/sorting/pagination to support scalable data access patterns  
+- Separated concerns into service and controller layers for maintainability  
 
-```
-Authorization: Bearer <your_token_here>
-```
+---
 
-## Examples
+## What This Project Demonstrates
 
-### Get All Regions
+- REST API design using ASP.NET Core  
+- Authentication and authorization with JWT  
+- Clean architecture and separation of concerns  
+- Backend data modeling with Entity Framework Core  
+- Production-style API design patterns (filtering, pagination, role control)  
 
-```
-GET /api/regions
-```
+---
 
-Response:
+## Context
 
-```json
-[
-  {
-    "id": "region_id",
-    "name": "Region Name",
-    ...
-  },
-  ...
-]
-```
+This project was built as a backend-focused exercise in designing secure, scalable REST APIs using ASP.NET Core and modern .NET practices.
