@@ -155,4 +155,4 @@ Supports:
 
 ## Repository
 
-https://github.com/keithgaines/NZWalksAPI
+[https://github.com/keithgaines/NZWalksAPI](https://github.com/keithgaines/nz-walks-api)
